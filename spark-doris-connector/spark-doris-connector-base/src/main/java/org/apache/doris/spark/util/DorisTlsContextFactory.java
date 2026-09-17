@@ -79,7 +79,7 @@ public final class DorisTlsContextFactory {
     }
 
     private static InputStream openCaCertificate(String caCertificatePath) {
-        Path path = Paths.get(caCertificatePath).toAbsolutePath();
+        Path path = Paths.get(caCertificatePath).normalize().toAbsolutePath();
         try {
             return Files.newInputStream(path);
         } catch (IOException e) {
@@ -92,7 +92,7 @@ public final class DorisTlsContextFactory {
         TrustManagerFactory trustManagerFactory =
                 TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
         trustManagerFactory.init(trustStore);
-        SSLContext sslContext = SSLContext.getInstance("TLS");
+        SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
         sslContext.init(null, trustManagerFactory.getTrustManagers(), null);
         return sslContext;
     }
@@ -107,12 +107,12 @@ public final class DorisTlsContextFactory {
 
     private static DorisRuntimeException caCertificateException(
             String caCertificatePath, Exception cause) {
-        String absolutePath = Paths.get(caCertificatePath).toAbsolutePath().toString();
+        // String absolutePath = Paths.get(caCertificatePath).toAbsolutePath().toString();
         return new DorisRuntimeException(
                 String.format(
-                        "Unable to load Doris TLS CA certificate from '%s' (absolute path '%s')",
-                        caCertificatePath,
-                        absolutePath),
+                        "Unable to load Doris TLS CA certificate from the configured path"),
+                        // caCertificatePath,
+                        // absolutePath),
                 cause);
     }
 }
