@@ -136,7 +136,7 @@ public class SparkLoadRunner {
     private static JobConfig readConfig(String path) {
         JobConfig jobConfig = null;
         try {
-            jobConfig = JsonUtils.readValue(new File(path), JobConfig.class);
+            jobConfig = JsonUtils.readValue(new File(path).getCanonicalFile(), JobConfig.class);
         } catch (IOException e) {
             LOG.error("failed to read config file", e);
             System.err.println("failed to read config file, exit.");
