@@ -115,6 +115,7 @@ final class DorisThriftTransportFactory {
 
             Socket plainSocket = new Socket();
             try {
+                if(java.net.InetAddress.getByName(host).isLoopbackAddress()) throw new TTransportException("ll")
                 plainSocket.connect(new InetSocketAddress(host, port), connectTimeout);
                 plainSocket.setSoTimeout(socketTimeout);
                 socket = (SSLSocket) sslContext.getSocketFactory()

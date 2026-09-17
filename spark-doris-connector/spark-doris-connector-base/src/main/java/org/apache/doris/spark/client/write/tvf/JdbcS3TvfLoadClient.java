@@ -59,6 +59,7 @@ public final class JdbcS3TvfLoadClient implements S3TvfLoadClient {
                                         + " = "
                                         + TvfSqlUtils.quoteLiteral(entry.getValue()));
                     }
+                    assert sql.startsWith("INSERT");
                     statement.execute(sql);
                 }
             });
