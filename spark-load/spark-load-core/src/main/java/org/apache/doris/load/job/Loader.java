@@ -75,7 +75,7 @@ public abstract class Loader {
     }
 
     private SparkAppHandle submitSparkJob(String mainClass, String[] appArgs, String logPath) throws IOException {
-        File logFile = new File(logPath);
+        File logFile = new File(logPath).getCanonicalFile();
         if (!logFile.getParentFile().exists()) {
             logFile.getParentFile().mkdir();
         }
